@@ -13,7 +13,7 @@
           system = system;
           overlays = (builtins.attrValues jupyterWith.overlays) ++ [ (import ./haskell-overlay.nix) ];
         };
-        iHaskell = pkgs.kernels.iHaskellWith {
+        iHaskellWithPackages = pkgs.kernels.iHaskellWith {
           name = "monad-bayes-series-env";
           packages = p: with p; [
             monad-bayes
@@ -30,9 +30,10 @@
           extraIHaskellFlags = "--codemirror Haskell";
         };
         jupyterEnvironment = pkgs.jupyterlabWith {
-          kernels = [ iHaskell ];
+          kernels = [ iHaskellWithPackages ];
         };
       in rec {
+        defaultPackage = jupyterEnvironment.env; 
         apps.jupyterlab = {
           type = "app";
           program = "${jupyterEnvironment}/bin/jupyter-lab";
