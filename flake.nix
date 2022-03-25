@@ -33,7 +33,7 @@
           kernels = [ iHaskellWithPackages ];
         };
       in rec {
-        defaultPackage = jupyterEnvironment.env; 
+        defaultPackage = jupyterEnvironment; 
         apps.jupyterlab = {
           type = "app";
           program = "${jupyterEnvironment}/bin/jupyter-lab";
